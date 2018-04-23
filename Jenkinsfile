@@ -10,7 +10,7 @@
       stage('Build') {
         steps {
             echo 'starting deploy to......'
-            sh "mvn clean"
+            sh "mvn -B clean package"
             sh "infer -- mvn compile"
         }
       }
