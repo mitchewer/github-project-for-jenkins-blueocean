@@ -1,24 +1,35 @@
-pipeline {
-     agent any
-     stages   {
-      stage('Clone Code') { // for display purposes
-         // Get some code from a GitHub repository
-         git 'https://github.com/mitchewer/github-project-for-jenkins-blueocean.git/'
+ pipeline {
+    agent any
+    stages   {
+      stage('Checkout') {
+        steps {
+          sh 'env'
+            git url: 'https://github.com/mitchewer/github-project-for-jenkins-blueocean.git/', branch: 'master'
+            echo 'Get some code from a GitHub repository'
+        }
       }
       stage('Build') {
-          sh "mvn clean"
-          sh "infer -- mvn compile"
+        steps {
+            echo 'starting deploy to......'
+		    sh 'mvn -B clean install'
+        }
       }
-      stage('Testing') {
-          sh "mvn test"
-          junit 'target/surefire-reports/TEST-*.xml'
+	  stage('Testing') {
+        steps {
+            sh "mvn test"
+            junit 'target/surefire-reports/TEST-*.xml'
+        }
       }
-      stage('Package') {
-          sh "'mvn' -Dmaven.test.skip=true package"
-          archive 'target/*.war'
+	  stage('Package') {
+        steps {
+            sh "'mvn' -Dmaven.test.skip=true package"
+            archive 'target/*.war'
+        }
       }
-      stage('Deploy') {
-          echo 'pipeline success'
+	  stage('Deploy') {
+        steps {
+            echo 'pipeline success'
+        }
       }
     }
  }
