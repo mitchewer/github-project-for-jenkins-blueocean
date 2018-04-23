@@ -3,7 +3,7 @@
     stages   {
       stage('Checkout') {
         steps {
-            git 'https://github.com/mitchewer/github-project-for-jenkins-blueocean.git/', branch: 'master'
+            git 'https://github.com/mitchewer/github-project-for-jenkins-blueocean.git/'
             echo 'Get some code from a GitHub repository'
         }
       }
