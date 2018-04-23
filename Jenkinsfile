@@ -13,19 +13,19 @@
 		    sh 'mvn -B clean install'
         }
       }
-	  stage('Testing') {
+      stage('Testing') {
         steps {
             sh "mvn test"
             junit 'target/surefire-reports/TEST-*.xml'
         }
       }
-	  stage('Package') {
+      stage('Package') {
         steps {
             sh "'mvn' -Dmaven.test.skip=true package"
             archive 'target/*.war'
         }
       }
-	  stage('Deploy') {
+      stage('Deploy') {
         steps {
             echo 'pipeline success'
         }
